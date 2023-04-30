@@ -1,140 +1,93 @@
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
+import { LoadingButton } from '@mui/lab';
+import Link from "@mui/material/Link";
 
 const RegisterView = (props) => {
-    const {handleRegisterSubmit} = props
+    const {handleRegisterSubmit, handlePasswordChange, handleEmailChange, handleNameChange, isLoading, email, password, name} = props
     return (
         <>
-            <Grid container component="main" sx={{ height: "100vh" }}>
-                <CssBaseline />
-                <Grid
-                    item
-                    xs={false}
-                    sm={4}
-                    md={7}
-                    sx={{
-                        backgroundImage:
-                            "url(https://plus.unsplash.com/premium_photo-1680608979589-e9349ed066d5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMjd8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60)",
-                        backgroundRepeat: "no-repeat",
-                        backgroundColor: (t) =>
-                            t.palette.mode === "light"
-                                ? t.palette.grey[50]
-                                : t.palette.grey[900],
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                    }}
-                />
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                    <Box
-                        sx={{
-                            my: 8,
-                            mx: 4,
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                            <LockOutlinedIcon />
-                        </Avatar>
+            <Grid container style={{ minHeight: '100vh' }}>
+                <Grid item lg={12} xs={12} sm={12} md={12} component={Paper} elevation={6} square>
+                    <div style={{ margin: 20, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <Typography component="h1" variant="h5">
-                            Sign up
+                            Sign Up
                         </Typography>
-                        <Box
-                            component="form"
-                            noValidate
-                            onSubmit={handleRegisterSubmit}
-                            sx={{ mt: 3 }}
-                        >
-                            <Grid container spacing={2}>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        autoComplete="given-name"
-                                        name="firstName"
-                                        required
-                                        fullWidth
-                                        id="firstName"
-                                        label="First Name"
-                                        autoFocus
-                                    />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        id="lastName"
-                                        label="Last Name"
-                                        name="lastName"
-                                        autoComplete="family-name"
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        id="email"
-                                        label="Email Address"
-                                        name="email"
-                                        autoComplete="email"
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField
-                                        required
-                                        fullWidth
-                                        name="password"
-                                        label="Password"
-                                        type="password"
-                                        id="password"
-                                        autoComplete="new-password"
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox value="allowExtraEmails" color="primary" />
-                                        }
-                                        label="I want to receive inspiration, marketing promotions and updates via email."
-                                    />
-                                </Grid>
-                            </Grid>
-                            <Button
+                        <form onSubmit={handleRegisterSubmit} noValidate>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="name"
+                                label="Name"
+                                name="name"
+                                autoFocus
+                                value={name}
+                                disabled={isLoading}
+                                onChange={handleNameChange}
+                            />
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                autoComplete="email"
+                                value={email}
+                                disabled={isLoading}
+                                onChange={handleEmailChange}
+                            />
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                                value={password}
+                                disabled={isLoading}
+                                onChange={handlePasswordChange}
+                            />
+                            <Link href="/signIn" variant="body2">
+                                Have an account? SignIn
+                            </Link>
+                            <br/>
+                            <br/>
+                            <LoadingButton
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
+                                color="primary"
+                                loding={isLoading}
+                                disabled={isLoading}
                             >
-                                Sign Up
-                            </Button>
-                            <Grid container justifyContent="flex-end">
-                                <Grid item>
-                                    <Link href="#" variant="body2">
-                                        Already have an account? Sign in
-                                    </Link>
-                                </Grid>
-                            </Grid>
-                        </Box>
-                    </Box>
+                                Register
+                            </LoadingButton>
+                        </form>
+                    </div>
                 </Grid>
             </Grid>
         </>
     )
 }
 
-
 RegisterView.propTypes = {
     handleRegisterSubmit: PropTypes.func.isRequired,
+    handleNameChange: PropTypes.func.isRequired,
+    handleEmailChange: PropTypes.func.isRequired,
+    handlePasswordChange: PropTypes.func.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    email: PropTypes.string.isRequired,
+    name: PropTypes.string.name
 };
 
 export  default  RegisterView

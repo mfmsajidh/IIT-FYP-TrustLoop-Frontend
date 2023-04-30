@@ -1,13 +1,58 @@
 import LoginView from "../view/LoginView.jsx";
+import {useState} from "react";
+import { useNavigate } from 'react-router-dom'
+import {API_CONSTANTS} from "../../../constants/constants.js";
+import axios from "axios";
 
 const LoginController = () => {
 
-    // Handle login function API call and validations
-    const handleLoginSubmit = () => {
-        console.log("Login Submit")
+    const navigate = useNavigate()
+    const [isLoading, setIsLoading] = useState(false)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value)
     }
 
-    return <LoginView handleLoginSubmit={handleLoginSubmit}/>
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value)
+    }
+    // Handle login function API call and validations
+    const handleLoginSubmit = async (e) => {
+        e.preventDefault()
+        if (!email || email === '') {
+            alert("Invalid email")
+            return
+        }
+
+        if (!password || password === '') {
+            alert("Invalid password")
+            return
+        }
+
+        setIsLoading(true)
+        try {
+            setIsLoading(false)
+            const response = await axios.post(`${API_CONSTANTS.baseUrl}/authentication/login`, {
+                email: email,
+                password: password,
+            })
+
+            if(response.data.isError) {
+                alert(response.data.message)
+            }
+
+            navigate('/home', { replace: true })
+
+        } catch (error) {
+            setIsLoading(false)
+            alert(error.response.data.message)
+        }
+    }
+
+
+    return <LoginView isLoading={isLoading} handleLoginSubmit={handleLoginSubmit} email={email} password={password} handleEmailChange={handleEmailChange} handlePasswordChange={handlePasswordChange}/>
 }
 
-export  default  LoginController
+export default LoginController
