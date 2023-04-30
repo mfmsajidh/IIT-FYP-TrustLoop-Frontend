@@ -44,8 +44,8 @@ const LoginView = (props) => {
                                 value={password}
                                 onChange={handlePasswordChange}
                             />
-                            <Link href="/signIn" variant="body2">
-                                Dont Have an account? SignUp
+                            <Link href="/signUp" variant="body2">
+                                Dont have an account? SignUp
                             </Link>
                             <br/>
                             <br/>
