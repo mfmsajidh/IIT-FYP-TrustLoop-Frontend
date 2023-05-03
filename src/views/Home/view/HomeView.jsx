@@ -94,15 +94,6 @@ export const HomeView = ({ handleClickOpen }) => {
           <Grid item xs={3}>
             <PostCardView />
           </Grid>
-          <Grid item xs={3}>
-            <PostCardView />
-          </Grid>
-          <Grid item xs={3}>
-            <PostCardView />
-          </Grid>
-          <Grid item xs={3}>
-            <PostCardView />
-          </Grid>
         </Grid>
       </Box>
     </Box>
