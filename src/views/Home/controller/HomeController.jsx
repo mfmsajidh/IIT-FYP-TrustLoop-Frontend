@@ -3,7 +3,7 @@ import { AddPostDialogView } from "../view/AddPostDialogView.jsx";
 import { HomeView } from "../view/HomeView.jsx";
 
 const HomeController = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [addPostDetails, setAddPostDetails] = useState({
     image: null,
     condition: "new",

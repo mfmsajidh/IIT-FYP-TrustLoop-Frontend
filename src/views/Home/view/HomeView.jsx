@@ -90,8 +90,14 @@ export const HomeView = ({ handleClickOpen }) => {
       </Box>
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
-        <Grid container spacing={2}>
-          <Grid item xs={3}>
+        <Grid
+          container
+          spacing={2}
+          sm={"auto"}
+          justifyContent="center"
+          alignItems="flex-start"
+        >
+          <Grid item>
             <PostCardView />
           </Grid>
         </Grid>

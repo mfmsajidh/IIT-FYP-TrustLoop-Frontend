@@ -3,8 +3,11 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Grid from "@mui/material/Grid";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import Grid from "@mui/material/Grid";
+import { Chip } from "@mui/material";
 export const PostCardView = () => {
   return (
     <Card>
@@ -15,17 +18,29 @@ export const PostCardView = () => {
         image="https://images.unsplash.com/photo-1682886425859-5ea813014758?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80"
       />
       <CardContent>
+        <Grid container spacing={0.5}>
+          <Grid item>
+            <Chip label="Condition" variant="outlined" size={"small"} />
+          </Grid>
+          <Grid item>
+            <Chip label="Category" variant="outlined" size={"small"} />
+          </Grid>
+        </Grid>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          Post Title
+        </Typography>
+        <Typography variant="caption" color="text.secondary">
+          Serial number
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          S/N #
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <IconButton color={"primary"}>
+          <ShoppingCartCheckoutIcon />
+        </IconButton>
+        <Typography variant={"button"}>LKR PRICE</Typography>
       </CardActions>
     </Card>
   );
