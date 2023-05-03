@@ -13,10 +13,11 @@ const HomeController = () => {
   const [addPostDetails, setAddPostDetails] = useState({
     image: null,
     condition: "new",
-    category: "laptop",
+    category: "mobile",
     postTitle: "",
     serialNumber: "",
     price: 0,
+    value: "",
   });
 
   const handleImageChange = (event) => {
@@ -72,6 +73,13 @@ const HomeController = () => {
     if (!isLoggedIn) navigate("/signin", { replace: true });
   };
 
+  const handleValueChange = (event) => {
+    setAddPostDetails({
+      ...addPostDetails,
+      value: event.target.value,
+    });
+  };
+
   return (
     <>
       <HomeView
@@ -89,6 +97,7 @@ const HomeController = () => {
         handlePostTitleChange={handlePostTitleChange}
         handleSerialNumberChange={handleSerialNumberChange}
         handlePriceChange={handlePriceChange}
+        handleValueChange={handleValueChange}
       />
     </>
   );

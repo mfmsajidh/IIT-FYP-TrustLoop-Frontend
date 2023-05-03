@@ -27,6 +27,7 @@ export const AddPostDialogView = ({
   handlePostTitleChange,
   handleSerialNumberChange,
   handlePriceChange,
+  handleValueChange,
 }) => {
   return (
     <Dialog fullScreen open={open} onClose={handleClose}>
@@ -82,8 +83,7 @@ export const AddPostDialogView = ({
                 label="Condition"
                 onChange={handleCategoryChange}
               >
-                <MenuItem value={"laptop"}>Laptop</MenuItem>
-                <MenuItem value={"watch"}>Watch</MenuItem>
+                <MenuItem value={"mobile"}>Mobile Phone</MenuItem>
                 <MenuItem value={"car"}>Car</MenuItem>
               </Select>
             </FormControl>
@@ -91,12 +91,25 @@ export const AddPostDialogView = ({
           <Grid item xs={12}>
             <TextField
               id="outlined-basic"
-              label="Serial Number"
+              label={addPostDetails.category === "mobile" ? "IMEI #" : "VIN #"}
               variant="outlined"
               fullWidth
               required
               onChange={handleSerialNumberChange}
               value={addPostDetails.serialNumber}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              id="outlined-basic"
+              label={
+                addPostDetails.category === "mobile" ? "Battery %" : "Mileage"
+              }
+              variant="outlined"
+              fullWidth
+              required
+              onChange={handleValueChange}
+              value={addPostDetails.value}
             />
           </Grid>
           <Grid item xs={12}>
