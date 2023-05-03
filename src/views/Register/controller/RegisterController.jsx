@@ -63,8 +63,7 @@ const RegisterController = () => {
       .catch((error) => {
         setIsLoading(false);
         alert(error.response.data.message);
-      })
-      .finally(() => setIsLoading(false));
+      });
   };
 
   return (

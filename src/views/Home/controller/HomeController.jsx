@@ -3,6 +3,8 @@ import { AddPostDialogView } from "../view/AddPostDialogView.jsx";
 import { HomeView } from "../view/HomeView.jsx";
 import { UserContext } from "../../../context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API_CONSTANTS } from "../../../constants/constants.js";
 
 const HomeController = () => {
   const navigate = useNavigate();
@@ -19,6 +21,7 @@ const HomeController = () => {
     price: 0,
     value: "",
   });
+  const [isAddPostLoading, setIsAddPostLoading] = useState(false);
 
   const handleImageChange = (event) => {
     setAddPostDetails({
@@ -80,6 +83,37 @@ const HomeController = () => {
     });
   };
 
+  const handleSubmitPost = async () => {
+    if (!addPostDetails.image) {
+      alert(`Upload Image!!!`);
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("image", addPostDetails.image);
+    formData.append("condition", addPostDetails.condition);
+    formData.append("category", addPostDetails.category);
+    formData.append("postTitle", addPostDetails.postTitle);
+    formData.append("serialNumber", addPostDetails.serialNumber);
+    formData.append("price", addPostDetails.price);
+    formData.append("value", addPostDetails.value);
+
+    await axios
+      .post(`${API_CONSTANTS.baseUrl}/post/add`, formData)
+      .then((response) => {
+        console.log(response);
+        if (response.data.isError) {
+          alert(`${response.data.message}`);
+          return;
+        }
+        handleClose();
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      })
+      .finally(() => setIsAddPostLoading(false));
+  };
+
   return (
     <>
       <HomeView
@@ -98,6 +132,8 @@ const HomeController = () => {
         handleSerialNumberChange={handleSerialNumberChange}
         handlePriceChange={handlePriceChange}
         handleValueChange={handleValueChange}
+        handleSubmitPost={handleSubmitPost}
+        isAddPostLoading={isAddPostLoading}
       />
     </>
   );

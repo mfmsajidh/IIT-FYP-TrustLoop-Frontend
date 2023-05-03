@@ -1,5 +1,6 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
 import Dialog from "@mui/material/Dialog";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -17,6 +18,7 @@ import {
   Select,
 } from "@mui/material";
 
+import SaveIcon from "@mui/icons-material/Save";
 export const AddPostDialogView = ({
   open,
   handleClose,
@@ -28,6 +30,8 @@ export const AddPostDialogView = ({
   handleSerialNumberChange,
   handlePriceChange,
   handleValueChange,
+  handleSubmitPost,
+  isAddPostLoading,
 }) => {
   return (
     <Dialog fullScreen open={open} onClose={handleClose}>
@@ -38,21 +42,34 @@ export const AddPostDialogView = ({
             color="inherit"
             onClick={handleClose}
             aria-label="close"
+            disabled={isAddPostLoading}
           >
             <CloseIcon />
           </IconButton>
           <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
             Add New Post
           </Typography>
-          <Button color="inherit" onClick={handleClose} variant={"outlined"}>
-            save
-          </Button>
+          <LoadingButton
+            color="inherit"
+            onClick={handleSubmitPost}
+            variant={"outlined"}
+            loadingPosition="start"
+            startIcon={<SaveIcon />}
+            loading={isAddPostLoading}
+          >
+            <span>Save</span>
+          </LoadingButton>
         </Toolbar>
       </AppBar>
       <Container sx={{ marginTop: "2rem" }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Button variant={"contained"} component="label" fullWidth>
+            <Button
+              variant={"contained"}
+              component="label"
+              fullWidth
+              disabled={isAddPostLoading}
+            >
               Upload Image
               <input
                 type="file"
@@ -64,6 +81,7 @@ export const AddPostDialogView = ({
           </Grid>
           <Grid item xs={12}>
             <TextField
+              disabled={isAddPostLoading}
               id="outlined-basic"
               label="Post Title"
               variant="outlined"
@@ -74,7 +92,7 @@ export const AddPostDialogView = ({
             />
           </Grid>
           <Grid item xs={12}>
-            <FormControl fullWidth required>
+            <FormControl fullWidth required disabled={isAddPostLoading}>
               <InputLabel id="demo-simple-select-label">Category</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
@@ -90,6 +108,7 @@ export const AddPostDialogView = ({
           </Grid>
           <Grid item xs={12}>
             <TextField
+              disabled={isAddPostLoading}
               id="outlined-basic"
               label={addPostDetails.category === "mobile" ? "IMEI #" : "VIN #"}
               variant="outlined"
@@ -101,6 +120,7 @@ export const AddPostDialogView = ({
           </Grid>
           <Grid item xs={12}>
             <TextField
+              disabled={isAddPostLoading}
               id="outlined-basic"
               label={
                 addPostDetails.category === "mobile" ? "Battery %" : "Mileage"
@@ -114,6 +134,7 @@ export const AddPostDialogView = ({
           </Grid>
           <Grid item xs={12}>
             <TextField
+              disabled={isAddPostLoading}
               id="outlined-basic"
               label="Price"
               variant="outlined"
@@ -130,7 +151,7 @@ export const AddPostDialogView = ({
             />
           </Grid>
           <Grid item xs={12}>
-            <FormControl fullWidth required>
+            <FormControl fullWidth required isLoading={isAddPostLoading}>
               <InputLabel id="demo-simple-select-label">Condition</InputLabel>
               <Select
                 labelId="demo-simple-select-label"

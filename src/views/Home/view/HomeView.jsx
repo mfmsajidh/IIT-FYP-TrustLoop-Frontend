@@ -15,6 +15,8 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { PostCardView } from "./PostCardView.jsx";
 import Grid from "@mui/material/Grid";
+import PostAddIcon from "@mui/icons-material/PostAdd";
+import LoginIcon from "@mui/icons-material/Login";
 
 const drawerWidth = 240;
 
@@ -63,7 +65,11 @@ export const HomeView = ({ handleClickOpen, isLoggedIn, handlePurchase }) => {
             TrustLOOP
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            <Button sx={{ color: "#fff" }} onClick={handleClickOpen}>
+            <Button
+              sx={{ color: "#fff" }}
+              onClick={handleClickOpen}
+              startIcon={isLoggedIn ? <PostAddIcon /> : <LoginIcon />}
+            >
               {isLoggedIn ? "Add Post" : "Sign In"}
             </Button>
           </Box>
