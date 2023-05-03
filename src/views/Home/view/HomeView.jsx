@@ -93,7 +93,6 @@ export const HomeView = ({ handleClickOpen }) => {
         <Grid
           container
           spacing={2}
-          sm={"auto"}
           justifyContent="center"
           alignItems="flex-start"
         >
