@@ -2,6 +2,8 @@ import axios from "axios";
 
 const StellarSdk = window.StellarSdk;
 
+const server = new StellarSdk.Server("https://horizon-testnet.stellar.org");
+
 const createKeypair = () => {
     // create new and unique key pair
     const keypair = StellarSdk.Keypair.random();
@@ -23,8 +25,17 @@ const createWallet = async (publicKey) => {
     })
 }
 
+const getAccount = async (publicKey) => {
+    try {
+        return await server.accounts().accountId(publicKey).call();
+    } catch (error) {
+        return error;
+    }
+}
+
 export default {
     createKeypair,
-    createWallet
+    createWallet,
+    getAccount
 }
 

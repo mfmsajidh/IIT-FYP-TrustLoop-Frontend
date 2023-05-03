@@ -49,12 +49,13 @@ const RegisterController = () => {
             name: name,
             publicKey: keypair.publicKey,
             secret: keypair.secret,
-        }).then(response => {
+        }).then(async (response) => {
             if (response.data.isError) {
                 alert(`${response.data.message}`)
                 return
             }
 
+            await StellarUtil.createWallet(keypair.publicKey)
             navigate('/signIn', {replace: true})
         }).catch(error => {
             setIsLoading(false)

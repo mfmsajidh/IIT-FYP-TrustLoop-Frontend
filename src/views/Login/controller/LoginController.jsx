@@ -5,7 +5,6 @@ import {API_CONSTANTS} from "../../../constants/constants.js";
 import axios from "axios";
 
 const LoginController = () => {
-
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false)
     const [email, setEmail] = useState('')
