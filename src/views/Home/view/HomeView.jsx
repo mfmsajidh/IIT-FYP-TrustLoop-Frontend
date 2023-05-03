@@ -18,7 +18,7 @@ import Grid from "@mui/material/Grid";
 
 const drawerWidth = 240;
 
-export const HomeView = ({ handleClickOpen }) => {
+export const HomeView = ({ handleClickOpen, isLoggedIn, handlePurchase }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -34,7 +34,7 @@ export const HomeView = ({ handleClickOpen }) => {
       <List>
         <ListItem disablePadding onClick={handleClickOpen}>
           <ListItemButton sx={{ textAlign: "center" }}>
-            <ListItemText primary={"Add Post"} />
+            <ListItemText primary={isLoggedIn ? "Add Post" : "Sign In"} />
           </ListItemButton>
         </ListItem>
       </List>
@@ -64,7 +64,7 @@ export const HomeView = ({ handleClickOpen }) => {
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             <Button sx={{ color: "#fff" }} onClick={handleClickOpen}>
-              Add Post
+              {isLoggedIn ? "Add Post" : "Sign In"}
             </Button>
           </Box>
         </Toolbar>
@@ -97,7 +97,10 @@ export const HomeView = ({ handleClickOpen }) => {
           alignItems="flex-start"
         >
           <Grid item>
-            <PostCardView />
+            <PostCardView
+              handlePurchase={handlePurchase}
+              isLoggedIn={isLoggedIn}
+            />
           </Grid>
         </Grid>
       </Box>

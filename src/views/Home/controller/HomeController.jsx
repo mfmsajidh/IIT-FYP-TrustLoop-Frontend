@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { AddPostDialogView } from "../view/AddPostDialogView.jsx";
 import { HomeView } from "../view/HomeView.jsx";
+import { UserContext } from "../../../context/UserContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 const HomeController = () => {
+  const navigate = useNavigate();
+  const { user } = useContext(UserContext);
+
+  const isLoggedIn = user.token !== "";
   const [open, setOpen] = useState(false);
   const [addPostDetails, setAddPostDetails] = useState({
     image: null,
@@ -54,6 +60,7 @@ const HomeController = () => {
   };
 
   const handleClickOpen = () => {
+    if (!isLoggedIn) navigate("/signin", { replace: true });
     setOpen(true);
   };
 
@@ -61,9 +68,17 @@ const HomeController = () => {
     setOpen(false);
   };
 
+  const handlePurchase = () => {
+    if (!isLoggedIn) navigate("/signin", { replace: true });
+  };
+
   return (
     <>
-      <HomeView handleClickOpen={handleClickOpen} />
+      <HomeView
+        handleClickOpen={handleClickOpen}
+        isLoggedIn={isLoggedIn}
+        handlePurchase={handlePurchase}
+      />
       <AddPostDialogView
         open={open}
         handleClose={handleClose}

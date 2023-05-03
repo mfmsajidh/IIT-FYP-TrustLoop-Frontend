@@ -58,7 +58,7 @@ const RegisterController = () => {
         }
 
         await StellarUtil.createWallet(keypair.publicKey);
-        navigate("/home", { replace: true });
+        navigate("/signin", { replace: true });
       })
       .catch((error) => {
         setIsLoading(false);

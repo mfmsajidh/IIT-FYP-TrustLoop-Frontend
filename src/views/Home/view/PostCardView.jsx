@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import { Chip } from "@mui/material";
-export const PostCardView = () => {
+export const PostCardView = ({ handlePurchase, isLoggedIn }) => {
   return (
     <Card>
       <CardMedia
@@ -37,7 +37,10 @@ export const PostCardView = () => {
         </Typography>
       </CardContent>
       <CardActions>
-        <IconButton color={"primary"}>
+        <IconButton
+          color={isLoggedIn ? "primary" : "error"}
+          onClick={handlePurchase}
+        >
           <ShoppingCartCheckoutIcon />
         </IconButton>
         <Typography variant={"button"}>LKR PRICE</Typography>
