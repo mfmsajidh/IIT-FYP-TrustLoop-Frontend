@@ -1,0 +1,94 @@
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import {FormControl, InputAdornment, InputLabel, MenuItem, Select} from "@mui/material";
+
+export const AddPostDialogView = ({open, handleClose,handleImageChange, handleConditionChange, addPostDetails, handleCategoryChange,handlePostTitleChange, handleSerialNumberChange,handlePriceChange}) => {
+    return (
+            <Dialog
+                fullScreen
+                open={open}
+                onClose={handleClose}
+            >
+                <AppBar sx={{ position: 'relative' }}>
+                    <Toolbar>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            onClick={handleClose}
+                            aria-label="close"
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                        <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                            Add New Post
+                        </Typography>
+                        <Button autoFocus color="inherit" onClick={handleClose} variant={"outlined"}>
+                            save
+                        </Button>
+                    </Toolbar>
+                </AppBar>
+                <Container sx={{marginTop: "2rem"}}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <Button variant={"contained"} component='label' fullWidth>
+                                Upload Image
+                                <input type='file' accept='image/png' hidden onChange={handleImageChange} />
+                            </Button>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField id="outlined-basic" label="Post Title" variant="outlined" fullWidth required onChange={handlePostTitleChange} value={addPostDetails.postTitle} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <FormControl fullWidth required>
+                                <InputLabel id="demo-simple-select-label">Category</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={addPostDetails.category}
+                                    label="Condition"
+                                    onChange={handleCategoryChange}
+                                >
+                                    <MenuItem value={"laptop"}>Laptop</MenuItem>
+                                    <MenuItem value={"watch"}>Watch</MenuItem>
+                                    <MenuItem value={"car"}>Car</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField id="outlined-basic" label="Serial Number" variant="outlined" fullWidth required onChange={handleSerialNumberChange} value={addPostDetails.serialNumber} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField id="outlined-basic" label="Price" variant="outlined" fullWidth required onChange={handlePriceChange} value={addPostDetails.price}           InputProps={{
+                                startAdornment: <InputAdornment position="start">LKR</InputAdornment>,
+                            }} type={"number"} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <FormControl fullWidth required>
+                                <InputLabel id="demo-simple-select-label">Condition</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={addPostDetails.condition}
+                                    label="Condition"
+                                    onChange={handleConditionChange}
+                                >
+                                    <MenuItem value={"new"}>New</MenuItem>
+                                    <MenuItem value={"reconditioned"}>Reconditioned</MenuItem>
+                                    <MenuItem value={"used"}>Used</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    </Grid>
+                </Container>
+            </Dialog>
+    );
+};
