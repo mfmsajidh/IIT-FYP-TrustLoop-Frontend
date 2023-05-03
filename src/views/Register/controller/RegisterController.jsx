@@ -1,8 +1,9 @@
 import RegisterView from "../view/RegisterView.jsx";
 import {useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 import axios from "axios";
 import {API_CONSTANTS} from "../../../constants/constants.js";
+import StellarUtil from "../../../utils/stellarUtil.js";
 
 const RegisterController = () => {
     const navigate = useNavigate()
@@ -10,6 +11,8 @@ const RegisterController = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [name, setName] = useState('')
+
+    const keypair = useMemo(() => StellarUtil.createKeypair(),[]);
 
     const handleNameChange = (e) => {
         setName(e.target.value)
@@ -24,7 +27,7 @@ const RegisterController = () => {
 
     const handleRegisterSubmit = async (e) => {
         e.preventDefault()
-        if(!name || name === ''){
+        if (!name || name === '') {
             alert("Invalid Name")
             return
         }
@@ -39,24 +42,26 @@ const RegisterController = () => {
         }
 
         setIsLoading(true)
-        try {
-            setIsLoading(false)
-            const response = await axios.post(`${API_CONSTANTS.baseUrl}/authentication/register`, {
-                email: email,
-                password: password,
-                name: name
-            })
 
-            if(response.data.isError) {
-                alert(response.data.message)
+        await axios.post(`${API_CONSTANTS.baseUrl}/authentication/register`, {
+            email: email,
+            password: password,
+            name: name,
+            publicKey: keypair.publicKey,
+            secret: keypair.secret,
+        }).then(response => {
+            if (response.data.isError) {
+                alert(`${response.data.message}`)
+                return
             }
 
-            navigate('/signIn', { replace: true })
-
-        } catch (error) {
+            navigate('/signIn', {replace: true})
+        }).catch(error => {
             setIsLoading(false)
             alert(error.response.data.message)
-        }
+        }).finally(() =>
+            setIsLoading(false)
+        )
     }
 
     return <RegisterView
@@ -68,7 +73,8 @@ const RegisterController = () => {
         email={email}
         password={password}
         name={name}
+        keypair={keypair}
     />
 }
 
-export  default  RegisterController
+export default RegisterController
