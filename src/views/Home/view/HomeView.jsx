@@ -1,69 +1,110 @@
-import {styled, createTheme, ThemeProvider} from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
-import Box from '@mui/material/Box';
-import MuiAppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import PostAddIcon from '@mui/icons-material/PostAdd';
-import Container from '@mui/material/Container';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import MenuIcon from "@mui/icons-material/Menu";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import { PostCardView } from "./PostCardView.jsx";
+import Grid from "@mui/material/Grid";
 
-const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-})(({theme, open}) => ({
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-}));
+const drawerWidth = 240;
 
-const mdTheme = createTheme();
+export const HomeView = ({ handleClickOpen }) => {
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
-const HomeView = ({handleClickOpen}) => {
-    return (
-        <ThemeProvider theme={mdTheme}>
-            <Box sx={{display: 'flex'}}>
-                <CssBaseline/>
-                <AppBar position="absolute">
-                    <Toolbar
-                        sx={{
-                            pr: '24px', // keep right padding when drawer closed
-                        }}
-                    >
-                        <Typography
-                            component="h1"
-                            variant="h6"
-                            color="inherit"
-                            noWrap
-                            sx={{flexGrow: 1}}
-                        >
-                            TrustLOOP
-                        </Typography>
-                        <IconButton color="inherit" onClick={handleClickOpen}>
-                                <PostAddIcon/>
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
-                <Box
-                    component="main"
-                    sx={{
-                        flexGrow: 1,
-                        height: '100vh',
-                        overflow: 'auto',
-                    }}
-                >
-                    <Toolbar/>
-                    <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
-                        <Typography>
-                            Sample
-                        </Typography>
-                    </Container>
-                </Box>
-            </Box>
-        </ThemeProvider>
-    )
-}
+  const handleDrawerToggle = () => {
+    setMobileOpen((prevState) => !prevState);
+  };
 
-export default HomeView
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+      <Typography variant="h6" sx={{ my: 2 }}>
+        TrustLOOP
+      </Typography>
+      <Divider />
+      <List>
+        <ListItem disablePadding onClick={handleClickOpen}>
+          <ListItemButton sx={{ textAlign: "center" }}>
+            <ListItemText primary={"Add Post"} />
+          </ListItemButton>
+        </ListItem>
+      </List>
+    </Box>
+  );
+
+  return (
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <AppBar component="nav">
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: "none" } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+          >
+            TrustLOOP
+          </Typography>
+          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            <Button sx={{ color: "#fff" }} onClick={handleClickOpen}>
+              Add Post
+            </Button>
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <Box component="nav">
+        <Drawer
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}
+        >
+          {drawer}
+        </Drawer>
+      </Box>
+      <Box component="main" sx={{ p: 3 }}>
+        <Toolbar />
+        <Grid container spacing={2}>
+          <Grid item xs={3}>
+            <PostCardView />
+          </Grid>
+          <Grid item xs={3}>
+            <PostCardView />
+          </Grid>
+          <Grid item xs={3}>
+            <PostCardView />
+          </Grid>
+          <Grid item xs={3}>
+            <PostCardView />
+          </Grid>
+        </Grid>
+      </Box>
+    </Box>
+  );
+};
