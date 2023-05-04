@@ -10,9 +10,7 @@ const HomeController = () => {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
 
-  const isLoggedIn = user.token !== "";
-  const [open, setOpen] = useState(false);
-  const [addPostDetails, setAddPostDetails] = useState({
+  const initialAddPostDetails = {
     image: null,
     condition: "new",
     category: "mobile",
@@ -20,7 +18,11 @@ const HomeController = () => {
     serialNumber: "",
     price: 0,
     value: "",
-  });
+  };
+
+  const isLoggedIn = user.token !== "";
+  const [open, setOpen] = useState(false);
+  const [addPostDetails, setAddPostDetails] = useState(initialAddPostDetails);
   const [isAddPostLoading, setIsAddPostLoading] = useState(false);
 
   const handleImageChange = (event) => {
@@ -89,23 +91,20 @@ const HomeController = () => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("image", addPostDetails.image);
-    formData.append("condition", addPostDetails.condition);
-    formData.append("category", addPostDetails.category);
-    formData.append("postTitle", addPostDetails.postTitle);
-    formData.append("serialNumber", addPostDetails.serialNumber);
-    formData.append("price", addPostDetails.price);
-    formData.append("value", addPostDetails.value);
+    setIsAddPostLoading(true);
 
     await axios
-      .post(`${API_CONSTANTS.baseUrl}/post/add`, formData)
+      .postForm(`${API_CONSTANTS.baseUrl}/post/add`, addPostDetails, {
+        headers: {
+          "Content-Type": `multipart/form-data`,
+        },
+      })
       .then((response) => {
-        console.log(response);
         if (response.data.isError) {
           alert(`${response.data.message}`);
           return;
         }
+        setAddPostDetails(initialAddPostDetails);
         handleClose();
       })
       .catch((error) => {

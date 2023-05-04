@@ -130,6 +130,7 @@ export const AddPostDialogView = ({
               required
               onChange={handleValueChange}
               value={addPostDetails.value}
+              type={"number"}
             />
           </Grid>
           <Grid item xs={12}>
@@ -151,7 +152,7 @@ export const AddPostDialogView = ({
             />
           </Grid>
           <Grid item xs={12}>
-            <FormControl fullWidth required isLoading={isAddPostLoading}>
+            <FormControl fullWidth required disabled={isAddPostLoading}>
               <InputLabel id="demo-simple-select-label">Condition</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
