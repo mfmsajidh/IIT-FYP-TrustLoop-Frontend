@@ -55,7 +55,7 @@ export const PostCardView = ({
           {postTitle}
         </Typography>
         <Typography variant="caption" color="text.secondary">
-          Serial number
+          {category === "car" ? "VIN #" : "IMEI #"}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {serialNumber}

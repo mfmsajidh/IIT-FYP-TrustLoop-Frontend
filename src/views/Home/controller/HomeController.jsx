@@ -36,7 +36,6 @@ const HomeController = () => {
     axios
       .get(`${API_CONSTANTS.baseUrl}/post/all`)
       .then((response) => {
-        console.log(response.data.data);
         if (response.data.isError) {
           alert(`${response.data.message}`);
           return;
