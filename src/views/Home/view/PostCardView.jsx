@@ -8,32 +8,57 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import { Chip } from "@mui/material";
-export const PostCardView = ({ handlePurchase, isLoggedIn }) => {
+export const PostCardView = ({
+  handlePurchase,
+  isLoggedIn,
+  image,
+  postTitle,
+  serialNumber,
+  price,
+  condition,
+  category,
+}) => {
   return (
     <Card>
       <CardMedia
         component="img"
         alt="post card"
         height="140"
-        image="https://images.unsplash.com/photo-1682886425859-5ea813014758?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80"
+        src={`data:${image.contentType};base64,
+        ${btoa(
+          new Uint8Array(image.data.data).reduce(
+            (data, byte) => data + String.fromCharCode(byte),
+            ""
+          )
+        )}`}
       />
       <CardContent>
         <Grid container spacing={0.5}>
           <Grid item>
-            <Chip label="Condition" variant="outlined" size={"small"} />
+            <Chip
+              label={condition}
+              variant="outlined"
+              size={"small"}
+              sx={{ textTransform: "capitalize" }}
+            />
           </Grid>
           <Grid item>
-            <Chip label="Category" variant="outlined" size={"small"} />
+            <Chip
+              label={category}
+              variant="outlined"
+              size={"small"}
+              sx={{ textTransform: "capitalize" }}
+            />
           </Grid>
         </Grid>
         <Typography gutterBottom variant="h5" component="div">
-          Post Title
+          {postTitle}
         </Typography>
         <Typography variant="caption" color="text.secondary">
           Serial number
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          S/N #
+          {serialNumber}
         </Typography>
       </CardContent>
       <CardActions>
@@ -43,7 +68,7 @@ export const PostCardView = ({ handlePurchase, isLoggedIn }) => {
         >
           <ShoppingCartCheckoutIcon />
         </IconButton>
-        <Typography variant={"button"}>LKR PRICE</Typography>
+        <Typography variant={"button"}>LKR {price}</Typography>
       </CardActions>
     </Card>
   );

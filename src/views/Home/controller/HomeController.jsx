@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { AddPostDialogView } from "../view/AddPostDialogView.jsx";
 import { HomeView } from "../view/HomeView.jsx";
 import { UserContext } from "../../../context/UserContext.jsx";
@@ -24,6 +24,30 @@ const HomeController = () => {
   const [open, setOpen] = useState(false);
   const [addPostDetails, setAddPostDetails] = useState(initialAddPostDetails);
   const [isAddPostLoading, setIsAddPostLoading] = useState(false);
+  const [isGetAllPostsLoading, setIsGetAllPostsLoading] = useState(true);
+  const [allPosts, setAllPosts] = useState([]);
+
+  useEffect(() => {
+    getAllPosts();
+  }, []);
+
+  const getAllPosts = async () => {
+    setIsGetAllPostsLoading(true);
+    axios
+      .get(`${API_CONSTANTS.baseUrl}/post/all`)
+      .then((response) => {
+        console.log(response.data.data);
+        if (response.data.isError) {
+          alert(`${response.data.message}`);
+          return;
+        }
+        setAllPosts(response.data.data);
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      })
+      .finally(() => setIsGetAllPostsLoading(false));
+  };
 
   const handleImageChange = (event) => {
     setAddPostDetails({
@@ -119,6 +143,8 @@ const HomeController = () => {
         handleClickOpen={handleClickOpen}
         isLoggedIn={isLoggedIn}
         handlePurchase={handlePurchase}
+        isGetAllPostsLoading={isGetAllPostsLoading}
+        allPosts={allPosts}
       />
       <AddPostDialogView
         open={open}

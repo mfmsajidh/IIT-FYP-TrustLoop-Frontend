@@ -17,10 +17,17 @@ import { PostCardView } from "./PostCardView.jsx";
 import Grid from "@mui/material/Grid";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import LoginIcon from "@mui/icons-material/Login";
+import { CircularProgress, LinearProgress } from "@mui/material";
 
 const drawerWidth = 240;
 
-export const HomeView = ({ handleClickOpen, isLoggedIn, handlePurchase }) => {
+export const HomeView = ({
+  handleClickOpen,
+  isLoggedIn,
+  handlePurchase,
+  isGetAllPostsLoading,
+  allPosts,
+}) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -74,6 +81,7 @@ export const HomeView = ({ handleClickOpen, isLoggedIn, handlePurchase }) => {
             </Button>
           </Box>
         </Toolbar>
+        {isGetAllPostsLoading && <LinearProgress color="secondary" />}
       </AppBar>
       <Box component="nav">
         <Drawer
@@ -93,6 +101,7 @@ export const HomeView = ({ handleClickOpen, isLoggedIn, handlePurchase }) => {
         >
           {drawer}
         </Drawer>
+        <LinearProgress color="secondary" />
       </Box>
       <Box component="main" sx={{ p: 3 }}>
         <Toolbar />
@@ -102,12 +111,20 @@ export const HomeView = ({ handleClickOpen, isLoggedIn, handlePurchase }) => {
           justifyContent="center"
           alignItems="flex-start"
         >
-          <Grid item>
-            <PostCardView
-              handlePurchase={handlePurchase}
-              isLoggedIn={isLoggedIn}
-            />
-          </Grid>
+          {allPosts.map((post) => (
+            <Grid item key={post.serialNumber}>
+              <PostCardView
+                image={post.image}
+                postTitle={post.postTitle}
+                serialNumber={post.serialNumber}
+                price={post.price}
+                condition={post.condition}
+                category={post.category}
+                handlePurchase={handlePurchase}
+                isLoggedIn={isLoggedIn}
+              />
+            </Grid>
+          ))}
         </Grid>
       </Box>
     </Box>
