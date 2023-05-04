@@ -9,6 +9,8 @@ import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import { Chip } from "@mui/material";
 import TimelineIcon from "@mui/icons-material/Timeline";
+import { useContext } from "react";
+import { UserContext } from "../../../context/UserContext.jsx";
 export const PostCardView = ({
   handlePurchase,
   isLoggedIn,
@@ -20,7 +22,9 @@ export const PostCardView = ({
   category,
   value,
   handleClickOpenTimeline,
+  userId,
 }) => {
+  const { user } = useContext(UserContext);
   return (
     <Card>
       <CardMedia
@@ -69,6 +73,7 @@ export const PostCardView = ({
           startIcon={<ShoppingCartCheckoutIcon />}
           size={"small"}
           onClick={handlePurchase}
+          disabled={userId === user.id}
         >
           LKR{price}
         </Button>

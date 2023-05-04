@@ -125,6 +125,7 @@ export const HomeView = ({
                 handlePurchase={handlePurchase}
                 isLoggedIn={isLoggedIn}
                 handleClickOpenTimeline={handleClickOpenTimeline}
+                userId={post.userId}
               />
             </Grid>
           ))}
