@@ -17,6 +17,7 @@ export const PostCardView = ({
   price,
   condition,
   category,
+  value,
 }) => {
   return (
     <Card>
@@ -54,11 +55,9 @@ export const PostCardView = ({
         <Typography gutterBottom variant="h5" component="div">
           {postTitle}
         </Typography>
-        <Typography variant="caption" color="text.secondary">
-          {category === "car" ? "VIN #" : "IMEI #"}
-        </Typography>
         <Typography variant="body2" color="text.secondary">
-          {serialNumber}
+          {value}
+          {category === "car" ? "KM Driven" : "% Battery Health"}
         </Typography>
       </CardContent>
       <CardActions>

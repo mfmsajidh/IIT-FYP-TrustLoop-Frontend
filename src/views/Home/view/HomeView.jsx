@@ -120,6 +120,7 @@ export const HomeView = ({
                 price={post.price}
                 condition={post.condition}
                 category={post.category}
+                value={post.value}
                 handlePurchase={handlePurchase}
                 isLoggedIn={isLoggedIn}
               />

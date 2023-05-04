@@ -123,8 +123,17 @@ export const AddPostDialogView = ({
               disabled={isAddPostLoading}
               id="outlined-basic"
               label={
-                addPostDetails.category === "mobile" ? "Battery %" : "Mileage"
+                addPostDetails.category === "mobile"
+                  ? "Battery Health"
+                  : "Mileage"
               }
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {addPostDetails.category === "mobile" ? "%" : "KM"}
+                  </InputAdornment>
+                ),
+              }}
               variant="outlined"
               fullWidth
               required
