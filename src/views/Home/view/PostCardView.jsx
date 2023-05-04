@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import { Chip } from "@mui/material";
+import TimelineIcon from "@mui/icons-material/Timeline";
 export const PostCardView = ({
   handlePurchase,
   isLoggedIn,
@@ -18,6 +19,7 @@ export const PostCardView = ({
   condition,
   category,
   value,
+  handleClickOpenTimeline,
 }) => {
   return (
     <Card>
@@ -61,13 +63,23 @@ export const PostCardView = ({
         </Typography>
       </CardContent>
       <CardActions>
-        <IconButton
+        <Button
           color={isLoggedIn ? "primary" : "error"}
+          variant="contained"
+          startIcon={<ShoppingCartCheckoutIcon />}
+          size={"small"}
           onClick={handlePurchase}
         >
-          <ShoppingCartCheckoutIcon />
-        </IconButton>
-        <Typography variant={"button"}>LKR {price}</Typography>
+          LKR{price}
+        </Button>
+        <Button
+          variant="outlined"
+          startIcon={<TimelineIcon />}
+          size={"small"}
+          onClick={handleClickOpenTimeline}
+        >
+          Timeline
+        </Button>
       </CardActions>
     </Card>
   );

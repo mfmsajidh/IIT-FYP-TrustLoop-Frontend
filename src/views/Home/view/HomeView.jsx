@@ -27,6 +27,7 @@ export const HomeView = ({
   handlePurchase,
   isGetAllPostsLoading,
   allPosts,
+  handleClickOpenTimeline,
 }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -123,6 +124,7 @@ export const HomeView = ({
                 value={post.value}
                 handlePurchase={handlePurchase}
                 isLoggedIn={isLoggedIn}
+                handleClickOpenTimeline={handleClickOpenTimeline}
               />
             </Grid>
           ))}

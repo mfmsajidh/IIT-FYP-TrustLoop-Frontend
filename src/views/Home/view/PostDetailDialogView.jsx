@@ -33,17 +33,14 @@ export const PostDetailDialogView = ({ open, handleClose }) => {
             <CloseIcon />
           </IconButton>
           <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-            Post History
+            Post Timeline
           </Typography>
         </Toolbar>
       </AppBar>
       <Container sx={{ marginTop: "2rem" }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Button variant={"contained"} component="label" fullWidth>
-              Upload Image
-              <input type="file" accept="image/png" hidden />
-            </Button>
+            <Typography>Hello</Typography>
           </Grid>
         </Grid>
       </Container>

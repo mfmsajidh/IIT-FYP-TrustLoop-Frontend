@@ -5,6 +5,7 @@ import { UserContext } from "../../../context/UserContext.jsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_CONSTANTS } from "../../../constants/constants.js";
+import { PostDetailDialogView } from "../view/PostDetailDialogView.jsx";
 
 const HomeController = () => {
   const navigate = useNavigate();
@@ -18,10 +19,12 @@ const HomeController = () => {
     serialNumber: "",
     price: 0,
     value: "",
+    userId: user.id,
   };
 
   const isLoggedIn = user.token !== "";
   const [open, setOpen] = useState(false);
+  const [openTimeline, setOpenTimeline] = useState(false);
   const [addPostDetails, setAddPostDetails] = useState(initialAddPostDetails);
   const [isAddPostLoading, setIsAddPostLoading] = useState(false);
   const [isGetAllPostsLoading, setIsGetAllPostsLoading] = useState(true);
@@ -97,6 +100,14 @@ const HomeController = () => {
     setOpen(false);
   };
 
+  const handleClickOpenTimeline = () => {
+    setOpenTimeline(true);
+  };
+
+  const handleCloseTimeline = () => {
+    setOpenTimeline(false);
+  };
+
   const handlePurchase = () => {
     if (!isLoggedIn) navigate("/signin", { replace: true });
   };
@@ -144,6 +155,7 @@ const HomeController = () => {
         handlePurchase={handlePurchase}
         isGetAllPostsLoading={isGetAllPostsLoading}
         allPosts={allPosts}
+        handleClickOpenTimeline={handleClickOpenTimeline}
       />
       <AddPostDialogView
         open={open}
@@ -158,6 +170,10 @@ const HomeController = () => {
         handleValueChange={handleValueChange}
         handleSubmitPost={handleSubmitPost}
         isAddPostLoading={isAddPostLoading}
+      />
+      <PostDetailDialogView
+        open={openTimeline}
+        handleClose={handleCloseTimeline}
       />
     </>
   );

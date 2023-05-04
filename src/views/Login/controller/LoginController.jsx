@@ -45,7 +45,7 @@ const LoginController = () => {
           return;
         }
 
-        signInUser(response.data.data.token);
+        signInUser(response.data.data);
         navigate("/home", { replace: true });
       })
       .catch((error) => {
