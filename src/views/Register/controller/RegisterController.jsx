@@ -48,8 +48,8 @@ const RegisterController = () => {
         email: email,
         password: password,
         name: name,
-        publicKey: keypair.publicKey,
-        secret: keypair.secret,
+        // publicKey: keypair.publicKey,
+        // secret: keypair.secret,
       })
       .then(async (response) => {
         if (response.data.isError) {
@@ -57,7 +57,7 @@ const RegisterController = () => {
           return;
         }
 
-        await StellarUtil.createWallet(keypair.publicKey);
+        // await StellarUtil.createWallet(keypair.publicKey);
         navigate("/signin", { replace: true });
       })
       .catch((error) => {
