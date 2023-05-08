@@ -9,6 +9,7 @@ import Link from "@mui/material/Link";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Skeleton } from "@mui/material";
+import { API_CONSTANTS } from "../../../constants/constants.js";
 
 export const IpfsFileDetailsView = ({ ipfsHash }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -26,13 +27,11 @@ export const IpfsFileDetailsView = ({ ipfsHash }) => {
 
   const getDetails = async () => {
     await axios
-      .get(`https://gateway.pinata.cloud/ipfs/${ipfsHash}`, {
-        headers: {
-          Accept: "text/plain",
-        },
+      .post(`${API_CONSTANTS.baseUrl}/post/ipfsDetails`, {
+        ipfsHash,
       })
       .then((response) => {
-        setDetail(response.data);
+        setDetail(response.data.data);
       })
       .catch((error) => {
         console.log(error);

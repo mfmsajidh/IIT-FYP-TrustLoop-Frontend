@@ -37,7 +37,7 @@ export const AccordionTimelineView = ({ timeline }) => {
       })
       .catch((error) => {
         console.log(error);
-        alert("Error in fetching IPFS details");
+        alert("Error in stellar hash details");
       })
       .finally(() => setIsLoading(false));
   };
