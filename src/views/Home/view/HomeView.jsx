@@ -129,6 +129,7 @@ export const HomeView = ({
                 userId={post.userId}
                 isPurchasingPost={isPurchasingPost}
                 postId={post._id}
+                transactionHistory={post.transactionHistory}
               />
             </Grid>
           ))}

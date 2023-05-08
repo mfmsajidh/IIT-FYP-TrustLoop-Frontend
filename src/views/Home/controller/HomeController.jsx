@@ -101,7 +101,8 @@ const HomeController = () => {
     setOpen(false);
   };
 
-  const handleClickOpenTimeline = () => {
+  const handleClickOpenTimeline = (transactionHistory) => {
+    console.log(transactionHistory);
     setOpenTimeline(true);
   };
 

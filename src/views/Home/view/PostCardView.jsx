@@ -27,6 +27,7 @@ export const PostCardView = ({
   userId,
   isPurchasingPost,
   postId,
+  transactionHistory,
 }) => {
   const { user } = useContext(UserContext);
   return (
@@ -86,7 +87,7 @@ export const PostCardView = ({
           variant="outlined"
           startIcon={<TimelineIcon />}
           size={"small"}
-          onClick={handleClickOpenTimeline}
+          onClick={() => handleClickOpenTimeline(transactionHistory)}
           disabled={isPurchasingPost}
         >
           Timeline
