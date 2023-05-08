@@ -28,6 +28,7 @@ export const HomeView = ({
   isGetAllPostsLoading,
   allPosts,
   handleClickOpenTimeline,
+  isPurchasingPost,
 }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -126,6 +127,8 @@ export const HomeView = ({
                 isLoggedIn={isLoggedIn}
                 handleClickOpenTimeline={handleClickOpenTimeline}
                 userId={post.userId}
+                isPurchasingPost={isPurchasingPost}
+                postId={post._id}
               />
             </Grid>
           ))}

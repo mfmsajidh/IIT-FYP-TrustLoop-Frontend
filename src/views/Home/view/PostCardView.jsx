@@ -11,6 +11,8 @@ import { Chip } from "@mui/material";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import { useContext } from "react";
 import { UserContext } from "../../../context/UserContext.jsx";
+import LoadingButton from "@mui/lab/LoadingButton";
+
 export const PostCardView = ({
   handlePurchase,
   isLoggedIn,
@@ -23,6 +25,8 @@ export const PostCardView = ({
   value,
   handleClickOpenTimeline,
   userId,
+  isPurchasingPost,
+  postId,
 }) => {
   const { user } = useContext(UserContext);
   return (
@@ -67,21 +71,23 @@ export const PostCardView = ({
         </Typography>
       </CardContent>
       <CardActions>
-        <Button
+        <LoadingButton
           color={isLoggedIn ? "primary" : "error"}
           variant="contained"
           startIcon={<ShoppingCartCheckoutIcon />}
           size={"small"}
-          onClick={handlePurchase}
+          onClick={() => handlePurchase(postId)}
           disabled={userId === user.id}
+          loading={isPurchasingPost}
         >
           LKR{price}
-        </Button>
+        </LoadingButton>
         <Button
           variant="outlined"
           startIcon={<TimelineIcon />}
           size={"small"}
           onClick={handleClickOpenTimeline}
+          disabled={isPurchasingPost}
         >
           Timeline
         </Button>

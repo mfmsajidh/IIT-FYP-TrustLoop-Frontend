@@ -14,7 +14,7 @@ const HomeController = () => {
   const initialAddPostDetails = {
     image: null,
     condition: "new",
-    category: "mobile",
+    category: "car",
     postTitle: "",
     serialNumber: "",
     price: 0,
@@ -29,6 +29,7 @@ const HomeController = () => {
   const [isAddPostLoading, setIsAddPostLoading] = useState(false);
   const [isGetAllPostsLoading, setIsGetAllPostsLoading] = useState(true);
   const [allPosts, setAllPosts] = useState([]);
+  const [isPurchasingPost, setIsPurchasingPost] = useState(false);
 
   useEffect(() => {
     getAllPosts();
@@ -108,8 +109,25 @@ const HomeController = () => {
     setOpenTimeline(false);
   };
 
-  const handlePurchase = () => {
+  const handlePurchase = async (postId) => {
     if (!isLoggedIn) navigate("/signin", { replace: true });
+    setIsPurchasingPost(true);
+    await axios
+      .post(`${API_CONSTANTS.baseUrl}/post/purchase`, {
+        postId,
+        userId: user.id,
+      })
+      .then((response) => {
+        alert(`${response.data.message}`);
+        if (response.data.isError) {
+          return;
+        }
+        getAllPosts();
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      })
+      .finally(() => setIsPurchasingPost(false));
   };
 
   const handleValueChange = (event) => {
@@ -134,12 +152,13 @@ const HomeController = () => {
         },
       })
       .then((response) => {
+        alert(`${response.data.message}`);
         if (response.data.isError) {
-          alert(`${response.data.message}`);
           return;
         }
         setAddPostDetails(initialAddPostDetails);
         handleClose();
+        getAllPosts();
       })
       .catch((error) => {
         alert(error.response.data.message);
@@ -156,6 +175,7 @@ const HomeController = () => {
         isGetAllPostsLoading={isGetAllPostsLoading}
         allPosts={allPosts}
         handleClickOpenTimeline={handleClickOpenTimeline}
+        isPurchasingPost={isPurchasingPost}
       />
       <AddPostDialogView
         open={open}
