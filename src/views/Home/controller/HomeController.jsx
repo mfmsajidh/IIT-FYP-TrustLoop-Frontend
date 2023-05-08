@@ -115,7 +115,10 @@ const HomeController = () => {
   };
 
   const handlePurchase = async (postId) => {
-    if (!isLoggedIn) navigate("/signin", { replace: true });
+    if (!isLoggedIn) {
+      navigate("/signin", { replace: true });
+      return;
+    }
     setIsPurchasingPost(true);
     await axios
       .post(`${API_CONSTANTS.baseUrl}/post/purchase`, {
