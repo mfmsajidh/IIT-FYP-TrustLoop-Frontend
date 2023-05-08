@@ -10,16 +10,25 @@ import CloseIcon from "@mui/icons-material/Close";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import {
-  FormControl,
-  InputAdornment,
-  InputLabel,
-  MenuItem,
-  Select,
-} from "@mui/material";
-
-import SaveIcon from "@mui/icons-material/Save";
-export const PostDetailDialogView = ({ open, handleClose }) => {
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import moment from "moment";
+import { Chip } from "@mui/material";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+export const PostDetailDialogView = ({
+  open,
+  handleClose,
+  timelineDetails,
+}) => {
+  console.log(timelineDetails);
   return (
     <Dialog fullScreen open={open} onClose={handleClose}>
       <AppBar sx={{ position: "relative" }}>
@@ -38,11 +47,53 @@ export const PostDetailDialogView = ({ open, handleClose }) => {
         </Toolbar>
       </AppBar>
       <Container sx={{ marginTop: "2rem" }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Typography>Hello</Typography>
-          </Grid>
-        </Grid>
+        {timelineDetails.map((timeline) => (
+          <Accordion expanded key={timeline._id}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>
+                {moment(timeline.timestamp).format("Do MMMM YYYY, h:mm:ss A")}
+              </Typography>
+              <Chip
+                label={
+                  timeline.transactionType === "addPost"
+                    ? "Add Post"
+                    : "Purchase"
+                }
+                color={
+                  timeline.transactionType === "addPost" ? "success" : "error"
+                }
+                size={"small"}
+                sx={{ marginLeft: "1rem" }}
+              />
+            </AccordionSummary>
+            <AccordionDetails>
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow selected>
+                      <TableCell>Previous Stellar Transaction ID</TableCell>
+                      <TableCell>Current Stellar Transaction ID</TableCell>
+                      <TableCell>IPFS Hash</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow
+                      sx={{
+                        "&:last-child td, &:last-child th": { border: 0 },
+                      }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {timeline.previousStellarTransactionId}
+                      </TableCell>
+                      <TableCell>{timeline.stellarTransactionId}</TableCell>
+                      <TableCell>{timeline.ipfsHash}</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </AccordionDetails>
+          </Accordion>
+        ))}
       </Container>
     </Dialog>
   );

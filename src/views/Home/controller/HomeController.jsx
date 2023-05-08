@@ -30,6 +30,7 @@ const HomeController = () => {
   const [isGetAllPostsLoading, setIsGetAllPostsLoading] = useState(true);
   const [allPosts, setAllPosts] = useState([]);
   const [isPurchasingPost, setIsPurchasingPost] = useState(false);
+  const [timelineDetails, setTimelineDetails] = useState([]);
 
   useEffect(() => {
     getAllPosts();
@@ -102,12 +103,15 @@ const HomeController = () => {
   };
 
   const handleClickOpenTimeline = (transactionHistory) => {
-    console.log(transactionHistory);
+    setTimelineDetails(
+      transactionHistory.sort((a, b) => b.timestamp - a.timestamp)
+    );
     setOpenTimeline(true);
   };
 
   const handleCloseTimeline = () => {
     setOpenTimeline(false);
+    setTimelineDetails([]);
   };
 
   const handlePurchase = async (postId) => {
@@ -195,6 +199,7 @@ const HomeController = () => {
       <PostDetailDialogView
         open={openTimeline}
         handleClose={handleCloseTimeline}
+        timelineDetails={timelineDetails}
       />
     </>
   );
