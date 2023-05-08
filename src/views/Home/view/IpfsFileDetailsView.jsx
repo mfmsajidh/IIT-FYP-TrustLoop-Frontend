@@ -57,7 +57,7 @@ export const IpfsFileDetailsView = ({ ipfsHash }) => {
             <TableCell>Condition</TableCell>
             <TableCell>Category</TableCell>
             <TableCell>
-              {isLoading
+              {!isLoading
                 ? detail.category === "car"
                   ? "Mileage"
                   : "Battery Health"
