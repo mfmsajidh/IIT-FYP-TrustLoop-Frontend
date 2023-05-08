@@ -26,6 +26,7 @@ import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import { IpfsFileDetailsView } from "./IpfsFileDetailsView.jsx";
 import { Fragment } from "react";
+import { AccordionTimelineView } from "./AccordionTimelineView.jsx";
 export const PostDetailDialogView = ({
   open,
   handleClose,
@@ -51,74 +52,7 @@ export const PostDetailDialogView = ({
       <Container sx={{ marginTop: "2rem" }}>
         {timelineDetails.map((timeline) => (
           <Fragment key={timeline._id}>
-            <Accordion expanded>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Typography>
-                  {moment(timeline.timestamp).format("Do MMMM YYYY, h:mm:ss A")}
-                </Typography>
-                <Chip
-                  label={
-                    timeline.transactionType === "addPost"
-                      ? "Add Post"
-                      : "Purchase"
-                  }
-                  color={
-                    timeline.transactionType === "addPost" ? "success" : "error"
-                  }
-                  size={"small"}
-                  sx={{ marginLeft: "1rem" }}
-                />
-                <LoadingButton
-                  size={"small"}
-                  variant={"outlined"}
-                  sx={{ marginLeft: "1rem" }}
-                >
-                  Verify Hash
-                </LoadingButton>
-              </AccordionSummary>
-              <AccordionDetails>
-                <TableContainer component={Paper}>
-                  <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                      <TableRow selected>
-                        <TableCell>Previous Stellar Transaction ID</TableCell>
-                        <TableCell>Current Stellar Transaction ID</TableCell>
-                        <TableCell>IPFS Hash</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      <TableRow
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                      >
-                        <TableCell component="th" scope="row">
-                          {timeline.previousStellarTransactionId && (
-                            <Link
-                              href={`https://stellar.expert/explorer/testnet/tx/${timeline.previousStellarTransactionId}`}
-                              target={"_blank"}
-                            >
-                              {timeline.previousStellarTransactionId}
-                            </Link>
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          <Link
-                            href={`https://stellar.expert/explorer/testnet/tx/${timeline.stellarTransactionId}`}
-                            target={"_blank"}
-                          >
-                            {timeline.stellarTransactionId}
-                          </Link>
-                        </TableCell>
-                        <TableCell>{timeline.ipfsHash}</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-                <IpfsFileDetailsView ipfsHash={timeline.ipfsHash} />
-              </AccordionDetails>
-            </Accordion>
-            <Divider />
+            <AccordionTimelineView timeline={timeline} />
           </Fragment>
         ))}
       </Container>
