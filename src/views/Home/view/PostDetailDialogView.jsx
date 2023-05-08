@@ -65,6 +65,13 @@ export const PostDetailDialogView = ({
                 size={"small"}
                 sx={{ marginLeft: "1rem" }}
               />
+              <LoadingButton
+                size={"small"}
+                variant={"outlined"}
+                sx={{ marginLeft: "1rem" }}
+              >
+                Verify Hash
+              </LoadingButton>
             </AccordionSummary>
             <AccordionDetails>
               <TableContainer component={Paper}>
@@ -83,7 +90,7 @@ export const PostDetailDialogView = ({
                       }}
                     >
                       <TableCell component="th" scope="row">
-                        {timeline.previousStellarTransactionId}
+                        {timeline.previousStellarTransactionId ?? "N/A"}
                       </TableCell>
                       <TableCell>{timeline.stellarTransactionId}</TableCell>
                       <TableCell>{timeline.ipfsHash}</TableCell>
